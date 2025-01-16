@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkcommerce_services=self.webpackChunkcommerce_services||[]).push([[6605],{23883:function(e,n,t){t.r(n),t.d(n,{_frontmatter:function(){return m},default:function(){return p}});var o=t(58168),c=t(80045),r=(t(88763),t(15680)),s=t(83407);const u=["components"],m={},f={_frontmatter:m},i=s.A;function p(e){let{components:n}=e,t=(0,c.A)(e,u);return(0,r.mdx)(i,(0,o.A)({},f,t,{components:n,mdxType:"MDXLayout"}))}p.isMDXComponent=!0}}]);
+//# sourceMappingURL=component---src-pages-composable-catalog-admin-api-reference-md-1ede70cbba7d9df58f78.js.map
