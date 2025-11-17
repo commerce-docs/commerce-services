@@ -2622,10 +2622,6 @@ components:
           type: string
           description: Product name
           example: Kangaroo Hoodie
-        slug:
-          type: string
-          description: The URL key for the product.
-          example: kangaroo-hoodie.html
         description:
           type: string
           nullable: true
@@ -2653,21 +2649,6 @@ components:
           description: A list of linked SKUs.
           items:
             $ref: "#/components/schemas/ProductLink"
-        routes:
-          type: array
-          description: A list of product routes.
-          items:
-            $ref: "#/components/schemas/ProductRoutes"
-        configurations:
-          type: array
-          description: Composite products, such as configurable products, must provide a list of product options that a shopper can select (for example, "color", "size", etc.).
-          items:
-            $ref: "#/components/schemas/ProductConfiguration"
-        bundles:
-          type: array
-          description: Composite products, such as bundle products, must include a list of individual products that are part of the bundle, organized into groups (for example, "shirts", "pants", "accessories").
-          items:
-            $ref: "#/components/schemas/ProductBundle"
         externalIds:
           type: array
           description: A list of external IDs for the product.
