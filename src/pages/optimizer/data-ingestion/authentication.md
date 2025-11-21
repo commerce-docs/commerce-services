@@ -17,16 +17,15 @@ For more information about IMS user authentication for other use cases, see [Use
 
 ## Obtain IMS credentials
 
-For direct access to the Data Ingestion API, you must authenticate using a bearer token.
-`Authorization: Bearer {{accessToken}}`
+For direct access to the Data Ingestion API, you must authenticate using an access token.
+`Authorization: {accessToken}`
 
-This token is generated from the credentials of an Adobe developer project that is configured for API access.
-The token is valid for 24 hours. When it expires, use the Adobe developer project credentials to [generate a new one](#generate-a-new-access-token).
+This token is generated from the credentials of an Adobe developer project that is configured for API access. The token is valid for 24 hours. When it expires, use the Adobe developer project credentials to [generate a new one](#generate-a-new-access-token).
 
 <br></br>
 
 <details>
-      <summary><b>Get credentials and bearer access tokens</b></summary>
+      <summary><b>Get credentials and access tokens</b></summary>
 
 import IMSAuth from '/src/_includes/authentication/initial-auth-for-api-access.md'
 
