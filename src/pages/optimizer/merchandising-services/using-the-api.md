@@ -70,7 +70,6 @@ When making requests to the storefront API, you must include required HTTP heade
 
 | Header name| Description
 | --- | ---
-|`AC-Environment-Id`: | Required. The instance id for the Adobe Commerce Optimizer instance
 |`AC-View-ID` | Required. The unique ID assigned to the catalog view that products will be sold through. For example, in the automotive industry, the catalog view could be dealers. In the manufacturing industry, the view could be a manufacturing location for suppliers. You can view the list of available catalog views and find the viewID from the [Adobe Commerce Optimizer UI](https://experienceleague.adobe.com/en/docs/commerce/optimizer/setup/catalog-view).
 |`AC-Source-Locale`: | Required. The catalog source locale (language or geography) to filter products for display or update, for example `en_US`. See the [catalog view configuration](https://experienceleague.adobe.com/en/docs/commerce/optimizer/setup/catalog-view) in the Adobe Commerce Optimizer UI to determine the correct value.
 |`AC-Policy-{*}` | Optional. The trigger name configured for a policy that sets data access filters to restrict product access based on request attributes and context. Examples include POS physical stores, marketplaces, or advertisement pipelines like Google, Meta, or Instagram. You can view the list of available policies and associated ids from the [Adobe Commerce Optimizer UI](https://experienceleague.adobe.com/en/docs/commerce/optimizer/catalog/policies). You can specify multiple policy headers per request. Example: `AC-Policy-Brand`.
@@ -83,7 +82,6 @@ Use the following template to submit requests using [curl](https://curl.se/). Us
 ```shell
 curl --request POST \
 --url https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/graphql \
---header 'AC-Environment-Id: {{tenantId}}' \
 --header 'AC-View-ID: {{catalogViewId}}'  \
 --header 'AC-Source-Locale: {{locale}}' 
 --header 'AC-Price-Book-ID: {{priceBookId}}'  \
@@ -120,7 +118,6 @@ To get started with the Merchandising API, follow these steps to make your first
    curl -X POST \
      'https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/graphql' \
      -H 'Content-Type: application/json' \
-     -H 'AC-Environment-ID: {{tenantId}}' \
      -H 'AC-View-ID: {{catalogViewId}}' \
      -H 'Source:Locale: {{locale}}' \
      -d '{"query": "query ProductSearch($search: String!) { productSearch( phrase: $search, page_size: 10) { items { productView { sku name description shortDescription images { url } ... on SimpleProductView { attributes { label name value } price { regular { amount { value currency } } roles } } } } } }", "variables": { "search": "your-string"}}'
