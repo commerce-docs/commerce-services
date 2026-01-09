@@ -22,7 +22,7 @@ module.exports = [
             },
             {
               title: "API Reference",
-              path: "https://developer.adobe.com/commerce/services/reference/rest/",
+              path: "/reference/rest/",
               EventTarget: "_top"
             }
           ]
