@@ -463,7 +463,7 @@ Add the simple product *Aurora Prism Battery* with two attribute codes, `Brand` 
 
 ```shell
 curl --request POST \
-  --url https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/api/v1/catalog/products \
+  --url https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/v1/catalog/products \
   --header "Content-Type: application/json" \
   --header "Authorization: {{accessToken}}" \
 
@@ -543,7 +543,7 @@ Add the product *Bolt Atlas Battery* with two attribute codes, `Brand` set to *B
 
 ```shell
 curl --request POST \
-  --url https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/api/v1/catalog/products \
+  --url https://na1-sandbox.api.commerce.adobe.com/{{tenantId}}/v1/catalog/products \
   --header "Content-Type: application/json" \
   --header "Authorization: {{accessToken}}" \
 

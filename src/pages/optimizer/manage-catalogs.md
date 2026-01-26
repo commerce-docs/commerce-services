@@ -24,6 +24,6 @@ Using the catalog view, policy, and catalog source resources available with the 
 
 * **Catalog source**—Specifies the language and geography (locale) for catalogs. The catalog source is set at the SKU level during data ingestion. When used, the `locale` catalog source is required. A catalog view must define at least one locale.
 
-  Example: Catalog source `locale` such as `en_US` or `es_ES`, and sources like 'brand' and 'market' that can be introduced to meet unique business use cases.
+  Example: Catalog source `locale` such as `en-US` or `es-ES`, and sources like 'brand' and 'market' that can be introduced to meet unique business use cases.
 
 For details, see the [Adobe Commerce Optimizer Guide](https://experienceleague.adobe.com/en/docs/commerce/optimizer/overview).
