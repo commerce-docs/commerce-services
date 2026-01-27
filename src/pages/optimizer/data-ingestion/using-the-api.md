@@ -202,6 +202,10 @@ To get started with the Data Ingestion API, follow these steps to make your firs
    - If the request is successful, you receive a `200 Created` response with the metadata for the product attributes.
    - If the request fails, you receive an error message with details about the issue.
 
+## Test API operations using Try it
+
+Interactively explore and test Data Ingestion API operations using the [Try it](api-testing.md) capability available in the Data Ingestion API reference.
+
 ### Next steps
 
 After you successfully make your first request, you can continue to use the Data Ingestion API to manage product and price data for your commerce catalog. The next steps include:
