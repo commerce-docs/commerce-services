@@ -15,7 +15,7 @@ Before using the export API, make sure you [authenticate](../reporting/index.md#
 
 <InlineAlert variant="info" slots="text" />
 
-If you need to check when your warehouse was last refreshed, use the [Update Cycle Status API](./update-cycle.md) to retrieve the most recent completed update cycle for your client.  
+To check when your warehouse was last refreshed, use the [Update Cycle Status API](update-cycle.md) to retrieve the most recent completed update cycle for your client.  
 
 ## Raw data exports
 
