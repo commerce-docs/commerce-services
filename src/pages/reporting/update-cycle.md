@@ -1,5 +1,5 @@
 ---
-title: Adobe Commerce Reporting Update Cycle Status API | Commerce Services
+title: Update Cycle Status | Commerce Services
 description: Retrieve the most recent update-cycle result for a Commerce Intelligence client, including job type, status, and timestamps.
 keywords:
   - Reporting
