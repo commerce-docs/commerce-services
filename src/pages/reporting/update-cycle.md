@@ -100,6 +100,8 @@ Timestamps reflect the client's instance time zone; convert to UTC in downstream
 
 ## Best practices
 
+Apply the following best practices to optimize your use of **Update Cycle Status API**.
+
 ### Polling frequency
 
 Use this endpoint sparingly (for example, health checks or dashboard tiles). Adobe recommends at least 60 seconds between calls per `clientId` unless your contract specifies higher allowances.
