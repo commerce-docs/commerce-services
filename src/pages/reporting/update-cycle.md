@@ -1,5 +1,5 @@
 ---
-title: Update Cycle Status API
+title: Adobe Commerce Reporting Update Cycle Status API | Commerce Services
 description: Retrieve the most recent update-cycle result for a Commerce Intelligence client, including job type, status, and timestamps.
 keywords:
   - Reporting
@@ -21,7 +21,7 @@ See the [Export API](./export-api.md) for exporting data; both APIs use the same
 
 ## Endpoint
 
-`GET /client/{clientId}/fullupdatestatus`
+`GET /client/:clientId/fullupdatestatus`
 
 ### Path parameters
 
@@ -81,7 +81,7 @@ curl -H "X-RJM-API-Key: $EXPORT_API_KEY" \
 | `lastCompletedUpdateJob.status.id` | integer | Terminal status identifier (for example, `4`). |
 | `lastCompletedUpdateJob.status.name` | string | Terminal status name (for example, `Completed Successfully`). |
 | `lastCompletedUpdateJobWithDataSync` | object \| null | Reserved for "Full Update + Data Sync" jobs; may be null if not applicable. |
-| `timezoneAbbreviation` | string | Client time-zone abbreviation (for example, `EST`). |
+| `timezoneAbbreviation` | string | Client time zone abbreviation (for example, `EST`). |
 
 <InlineAlert variant="info" slots="text" />
 
