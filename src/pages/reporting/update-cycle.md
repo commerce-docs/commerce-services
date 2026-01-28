@@ -9,7 +9,7 @@ keywords:
 
 # Update Cycle Status API
 
-Use the **Update Cycle Status API** to retrieve the most recent completed update-cycle result (for example, a **Full Update**) for a specific Commerce Intelligence client. The response returns job metadata (type, status, start and end times) and the client's time-zone abbreviation.
+Use the **Update Cycle Status API** to retrieve the most recent completed update-cycle result (for example, a **Full Update**) for a specific Commerce Intelligence client. The response returns job metadata (type, status, start and end times) and the client's time zone abbreviation.
 
 <InlineAlert variant="info" slots="text" />
 
