@@ -13,6 +13,10 @@ The Adobe Commerce Reporting Export API allows you to access some of the raw dat
 
 Before using the export API, make sure you [authenticate](../reporting/index.md#authentication) your connection.
 
+<InlineAlert variant="info" slots="text" />
+
+To check when your warehouse was last refreshed, use the [Update Cycle Status API](update-cycle.md) to retrieve the most recent completed update cycle for your client.  
+
 ## Raw data exports
 
 <InlineAlert variant="info" slots="text" />

@@ -15,6 +15,10 @@ module.exports = [
         title: "Libraries",
         path: "/reporting/libraries/",
       },
+      {
+        title: "Update Cycle Status API",
+        path: "/reporting/update-cycle/",
+      },
     ],
   },
 ];
