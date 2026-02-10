@@ -667,6 +667,7 @@ query GetBundleProductDetails {
     }
 }
 ```
+
 </CodeBlock>
 
 ### Product Search
