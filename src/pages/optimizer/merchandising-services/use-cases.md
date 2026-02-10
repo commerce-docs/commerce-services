@@ -243,6 +243,7 @@ query {
         "request-id": "a95140e9-47f5-4f51-9386-8b6bbf50fd48"
     }
 }
+</CodeBlock>
 
 #### Return details about a complex product
 
@@ -666,6 +667,7 @@ query GetBundleProductDetails {
     }
 }
 ```
+</CodeBlock>
 
 ### Product Search
 
