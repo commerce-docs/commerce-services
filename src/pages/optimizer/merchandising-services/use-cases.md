@@ -245,8 +245,6 @@ query {
 }
 ```
 
-</CodeBlock>
-
 #### Return details about a complex product
 
 The following query returns details about a complex bundled product with sku `cru-2014-parts`. This bundle provides the optional selections to configure the quality level (standard, midrange, premium) for Cruz Verde 2014 product parts:
@@ -670,7 +668,6 @@ query GetBundleProductDetails {
 }
 ```
 
-</CodeBlock>
 
 ### Product Search
 
@@ -841,4 +838,3 @@ query {
 }
 ```
 
-</CodeBlock>
