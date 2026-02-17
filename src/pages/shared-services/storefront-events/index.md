@@ -132,7 +132,7 @@ If your dashboard does not display any statistics, ensure that the required even
 
 <InlineAlert variant="info" slots="text"/>
 
-The `product-view` event is required when a user adds a product from the **Product Detail Page** (PDP). However, it is not required for conversion rate calculation if a user adds a product directly from the **Search Results Page** and completes checkout without visiting the PDP.
+The `product-view` event is required when a user adds a product from the **Product Detail Page** (PDP). However, it is not required for conversion rate if a user adds a product directly from the **Search Results Page** and completes checkout without visiting the PDP.
 
 #### Required contexts
 
