@@ -130,6 +130,10 @@ If your dashboard does not display any statistics, ensure that the required even
 | Click-through rate    |`page-view`, `search-request-sent`, `search-response-received`, `search-results-view`, `search-product-click`   | `searchRequestId`, `sku`, `parentSku` |
 | Conversion rate       |`page-view`, `search-request-sent`, `search-response-received`, `search-results-view`, `search-product-click`, `product-view`, `add-to-cart`, `place-order`| `searchRequestId`, `sku`, `parentSku` |
 
+<InlineAlert variant="info" slots="text"/>
+
+The `product-view` event is not always required for **Conversion rate calculation**. If a user adds a product directly from the **Search Results Page** and completes checkout, the conversion is still valid even without a `product-view` event.
+
 #### Required contexts
 
 All events require the `Page` and `Storefront` contexts. This should happen at the page level/storefront application layer rather than when generating individual events. For example, in a PHP storefront, the PHP application container is responsible for setting them at runtime.
