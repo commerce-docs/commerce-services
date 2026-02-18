@@ -668,7 +668,6 @@ query GetBundleProductDetails {
 }
 ```
 
-
 ### Product Search
 
 Return information about simple products. This examples uses the productSearch query to return information about battery products for Cruz Verde 2014 models.
