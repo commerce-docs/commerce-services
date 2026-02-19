@@ -31,7 +31,7 @@ async function buildWithEnhancedSchema() {
       '$1$2'
     );
     tempConfig = tempConfig.replace(
-      /^(\s*)(url:\s*https:\/\/na1-sandbox)/m,
+      /^(\s*)(url:\s*https:\/\/.*\/graphql.*)/m,
       '$1#$2'
     );
     fs.writeFileSync(tempConfigPath, tempConfig);

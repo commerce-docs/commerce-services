@@ -23,12 +23,12 @@ const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
 async function fetchIntrospection() {
   const tenantId = process.env.TENANT_ID;
   const catalogViewId = process.env.CATALOG_VIEW_ID;
-  
+  const apiHost = process.env.API_HOST || 'na1-sandbox.api.commerce.adobe.com';
+
   if (!tenantId || !catalogViewId) {
     throw new Error('Missing required environment variables: TENANT_ID, CATALOG_VIEW_ID');
   }
-  
-  const url = `https://na1-sandbox.api.commerce.adobe.com/${tenantId}/graphql`;
+  const url = `https://${apiHost}/${tenantId}/graphql`;
   const introspectionQuery = {
     query: `
       query IntrospectionQuery {
@@ -49,7 +49,6 @@ async function fetchIntrospection() {
           }
         }
       }
-      
       fragment FullType on __Type {
         kind
         name
@@ -129,7 +128,7 @@ async function fetchIntrospection() {
     const postData = JSON.stringify(introspectionQuery);
     
     const options = {
-      hostname: 'na1-sandbox.api.commerce.adobe.com',
+      hostname: apiHost,
       port: 443,
       path: `/${tenantId}/graphql`,
       method: 'POST',
