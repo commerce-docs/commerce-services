@@ -60,7 +60,7 @@ Follow these steps to test any API operation using the interactive documentation
 
    - Click **Try it** for the operation you want to test.
 
-2.  **Configure the endpoint:** In the request template, replace the `tenantId` placeholder with your instance ID.
+1.  **Configure the endpoint:** In the request template, replace the `tenantId` placeholder with your instance ID.
 
 1. **Add authentication:** Select the **Parameters** tab, and replace the **Authorization** value with the  access token you generated in Step 1.
 
@@ -108,7 +108,7 @@ Here's a practical example of testing the Create Metadata endpoint:
          "AUTOCOMPLETE"
       ]
     }
-  ]
+   ]
    ```
 
 6. Click **Send** and review the response.
