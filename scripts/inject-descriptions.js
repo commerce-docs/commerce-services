@@ -47,26 +47,30 @@ function preprocessIntrospection(introspectionResult) {
  * Inject descriptions into query fields
  */
 function injectQueryDescriptions(queryType) {
-  if (!queryType.fields || !metadata.OBJECT || !metadata.OBJECT.Query || !metadata.OBJECT.Query.fields) {
+  if (!queryType.fields) {
     return;
   }
   
+  const queryFields = metadata.OBJECT && metadata.OBJECT.Query && metadata.OBJECT.Query.fields;
+  const fieldArgs = metadata.FIELD_ARGUMENT && metadata.FIELD_ARGUMENT.Query;
+  
   queryType.fields.forEach(field => {
-    const fieldMetadata = metadata.OBJECT.Query.fields[field.name];
-    if (fieldMetadata && fieldMetadata.documentation && fieldMetadata.documentation.description) {
-      field.description = fieldMetadata.documentation.description;
-      console.log(`📝 Injected description for query: ${field.name}`);
-      
-      // Also inject argument descriptions
-      if (field.args && metadata.FIELD_ARGUMENT && metadata.FIELD_ARGUMENT.Query && metadata.FIELD_ARGUMENT.Query[field.name]) {
-        field.args.forEach(arg => {
-          const argMetadata = metadata.FIELD_ARGUMENT.Query[field.name][arg.name];
-          if (argMetadata && argMetadata.documentation && argMetadata.documentation.description) {
-            arg.description = argMetadata.documentation.description;
-            console.log(`📝 Injected description for argument: ${field.name}.${arg.name}`);
-          }
-        });
+    if (queryFields) {
+      const fieldMetadata = queryFields[field.name];
+      if (fieldMetadata && fieldMetadata.documentation && fieldMetadata.documentation.description) {
+        field.description = fieldMetadata.documentation.description;
+        console.log(`📝 Injected description for query: ${field.name}`);
       }
+    }
+    
+    if (field.args && fieldArgs && fieldArgs[field.name]) {
+      field.args.forEach(arg => {
+        const argMetadata = fieldArgs[field.name][arg.name];
+        if (argMetadata && argMetadata.documentation && argMetadata.documentation.description) {
+          arg.description = argMetadata.documentation.description;
+          console.log(`📝 Injected description for argument: ${field.name}.${arg.name}`);
+        }
+      });
     }
   });
 }

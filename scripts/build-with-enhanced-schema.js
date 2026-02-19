@@ -19,9 +19,23 @@ async function buildWithEnhancedSchema() {
     console.log('🚀 Step 1: Generating enhanced schema...');
     await enhanceSchema();
     
-    // Step 2: Generate SpectaQL config
+    // Step 2: Generate SpectaQL config pointing to the enhanced schema
     console.log('🚀 Step 2: Generating SpectaQL configuration...');
     require('./generate-spectaql-config');
+    
+    const fs = require('fs');
+    const { tempConfigPath } = require('./generate-spectaql-config');
+    let tempConfig = fs.readFileSync(tempConfigPath, 'utf8');
+    tempConfig = tempConfig.replace(
+      /^(\s*)#(introspectionFile:\s*spectaql\/enhanced-schema\.json)/m,
+      '$1$2'
+    );
+    tempConfig = tempConfig.replace(
+      /^(\s*)(url:\s*https:\/\/na1-sandbox)/m,
+      '$1#$2'
+    );
+    fs.writeFileSync(tempConfigPath, tempConfig);
+    console.log('📝 Configured SpectaQL to use enhanced schema file');
     
     // Step 3: Run SpectaQL with enhanced schema
     console.log('🚀 Step 3: Running SpectaQL with enhanced schema...');

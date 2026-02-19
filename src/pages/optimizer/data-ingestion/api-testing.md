@@ -106,9 +106,9 @@ Here's a practical example of testing the Create Metadata endpoint:
        "searchWeight": 1,
        "searchTypes": [
          "AUTOCOMPLETE"
-       ]
+      ]
     }
-   ]
+  ]
    ```
 
 6. Click **Send** and review the response.
@@ -161,6 +161,6 @@ Here's a practical example of testing the Create Metadata endpoint:
 
 After successfully testing API operations:
 
-1. **Integrate with your application** - Use the [Get Started guide](using-the-api.md) to implement API calls in your code
-3. **Explore SDKs** - Consider using the [TypeScript](https://github.com/adobe-commerce/aco-ts-sdk) or [Java](https://github.com/adobe-commerce/aco-java-sdk) SDKs for easier integration
-4. **Review limitations** - Understand [rate limits and boundaries](using-the-api.md#limitations) for production use.
+1. **Integrate with your application** - Use the [Get Started guide](using-the-api.md) to implement API calls in your code.
+2. **Explore SDKs** - Consider using the [TypeScript](https://github.com/adobe-commerce/aco-ts-sdk) or [Java](https://github.com/adobe-commerce/aco-java-sdk) SDKs for easier integration.
+3. **Review limitations** - Understand [rate limits and boundaries](using-the-api.md#limitations) for production use.
