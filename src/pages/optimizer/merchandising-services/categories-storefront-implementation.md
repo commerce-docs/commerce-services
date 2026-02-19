@@ -70,6 +70,8 @@ type CategoryNavigationView implements CategoryViewV2 {
 
 For complete field details, see [`CategoryNavigationView`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryNavigationView) in the Merchandising Services GraphQL API reference.
 
+See the [Navigation query examples](#navigation-query-examples) section below for example queries and responses using this type.
+
 #### Performance safeguards
 
 - **Depth Limitation**: Menu depth is limited to 4 levels maximum
@@ -98,19 +100,192 @@ type CategoryProductView implements CategoryViewV2 {
 }
 ```
 
+The `parents` field is self-referencing—each parent entry is itself a `CategoryProductView` with its own `name`, `slug`, `level`, and `parents`. This allows you to reconstruct the full breadcrumb path for any category a product belongs to.
+
 For complete field details, see [`CategoryProductView`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryProductView) in the Merchandising Services GraphQL API reference.
 
-The `parents` field is self-referencing—each parent entry is itself a `CategoryProductView` with its own `name`, `slug`, `level`, and `parents`. This allows you to reconstruct the full breadcrumb path for any category a product belongs to.
+See the [Products query with categories examples](#products-query-with-categories-examples) section below for example queries and responses using this type.
 
 #### Performance safeguards
 
 The `categories` field is optional on product types. Omit it when category data is not needed to avoid unnecessary overhead.
 
-#### Example: Retrieve product categories with breadcrumb ancestors
+### CategoryTreeView type
+
+The `CategoryTreeView` type implements `CategoryViewV2` and provides the richest category data. It contains:
+
+- **name** and **slug** — Category identity
+- **level** and **parentSlug** / **childrenSlugs** — Hierarchy and relationships
+- **description** — Category descriptive content
+- **metaTags** — SEO metadata (title, description, keywords)
+- **images** — Category images
+
+Use this type for rich category landing pages, SEO-driven content, and CMS administration.
+
+#### Type definition
+
+```graphql
+type CategoryTreeView implements CategoryViewV2 {
+    slug: String!
+    name: String!
+    level: Int
+    parentSlug: String
+    childrenSlugs: [String]
+    description: String
+    metaTags: CategoryMetaTags
+    images: [CategoryImage]
+}
+
+type CategoryMetaTags {
+    title: String
+    description: String
+    keywords: [String]
+}
+
+type CategoryImage {
+    url: String!
+    label: String
+    roles: [String]
+    customRoles: [String]
+}
+```
+
+For complete field details, including the [`CategoryMetaTags`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryMetaTags) and [`CategoryImage`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryImage) types, see [`CategoryTreeView`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryTreeView) in the Merchandising Services GraphQL API reference.
+
+See the [CategoryTree query examples](#categorytree-query-examples) section below for example queries and responses using this type.
+
+## Navigation query examples
+
+Retrieve category navigation data optimized for storefront menu rendering with built-in performance safeguards.
+
+```graphql
+type Query {
+    navigation(family: String!): [CategoryNavigationView]
+}
+```
+
+The `family` parameter is required and specifies which category family to retrieve. The query returns the full hierarchy for that family in a single request, with a maximum depth of 4 levels.
+
+### Retrieve basic top menu navigation
+
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
+
+```graphql
+query GetTopMenuNavigation {
+    navigation(family: "Top-menu") {
+        slug
+        name
+        children {
+            slug
+            name
+            children {
+                slug
+                name
+            }
+        }
+    }
+}
+```
+
+**Response:**
+
+```json
+{
+    "data": {
+        "navigation": [
+            {
+                "slug": "men",
+                "name": "Men clothing",
+                "children": []
+            }
+        ]
+    }
+}
+```
+
+The response returns a single root node with no nested children:
+
+```plaintext
+Men clothing
+└── (no children)
+```
+
+### Retrieve multi-level menu navigation
+
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
+
+```graphql
+query GetFullMenuNavigation {
+    navigation(family: "menu") {
+        slug
+        name
+        children {
+            slug
+            name
+            children {
+                slug
+                name
+                children {
+                    slug
+                    name
+                }
+            }
+        }
+    }
+}
+```
+
+**Response:**
+
+```json
+{
+    "data": {
+        "navigation": [
+            {
+                "slug": "men",
+                "name": "Men clothing",
+                "children": [
+                    {
+                        "slug": "men/tops",
+                        "name": "Men tops",
+                        "children": [
+                            {
+                                "slug": "men/tops/jackets",
+                                "name": "Jackets",
+                                "children": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
+```
+
+The response returns a three-level nested hierarchy:
+
+```plaintext
+Men clothing
+└── Men tops
+    └── Jackets
+```
+
+## Products query with categories examples
+
+Retrieve category data for products, including breadcrumb ancestors, with optional filtering by category family.
+
+### Retrieve product categories with breadcrumb ancestors
 
 The `categories` field is available on product types such as `ProductView`. You can optionally filter by `family` to return only categories from a specific family.
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query {
@@ -172,11 +347,13 @@ Men (level 0) → Clothes (level 1) → Shorts (level 2)
                                       └── product: Red Shorts (M)
 ```
 
-#### Example: Filter product categories by family
+### Filter product categories by family
 
 A product can belong to categories in multiple families. Use the `family` parameter to return only categories from a specific family. In this example, the product belongs to categories in both the "clothing" and "seasonal" families, but the query filters for "seasonal" only.
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query {
@@ -228,166 +405,7 @@ query {
 
 Without the `family` filter, the response would include categories from all families the product belongs to—for example, both "Shorts" from the "clothing" family and "Summer Essentials" from the "seasonal" family. The `family` parameter narrows the result to a single family, which is useful when rendering context-specific navigation or breadcrumbs.
 
-### CategoryTreeView type
-
-The `CategoryTreeView` type implements `CategoryViewV2` and provides the richest category data. It contains:
-
-- **name** and **slug** — Category identity
-- **level** and **parentSlug** / **childrenSlugs** — Hierarchy and relationships
-- **description** — Category descriptive content
-- **metaTags** — SEO metadata (title, description, keywords)
-- **images** — Category images
-
-Use this type for rich category landing pages, SEO-driven content, and CMS administration.
-
-#### Type definition
-
-```graphql
-type CategoryTreeView implements CategoryViewV2 {
-    slug: String!
-    name: String!
-    level: Int
-    parentSlug: String
-    childrenSlugs: [String]
-    description: String
-    metaTags: CategoryMetaTags
-    images: [CategoryImage]
-}
-
-type CategoryMetaTags {
-    title: String
-    description: String
-    keywords: [String]
-}
-
-type CategoryImage {
-    url: String!
-    label: String
-    roles: [String]
-    customRoles: [String]
-}
-```
-
-For complete field details, including the [`CategoryMetaTags`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryMetaTags) and [`CategoryImage`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryImage) types, see [`CategoryTreeView`](https://developer.adobe.com/commerce/webapi/graphql/merchandising/#definition-CategoryTreeView) in the Merchandising Services GraphQL API reference.
-
-## Navigation query
-
-Retrieve category navigation data optimized for storefront menu rendering with built-in performance safeguards.
-
-```graphql
-type Query {
-    navigation(family: String!): [CategoryNavigationView]
-}
-```
-
-The `family` parameter is required and specifies which category family to retrieve. The query returns the full hierarchy for that family in a single request, with a maximum depth of 4 levels.
-
-### Example: Retrieve basic top menu navigation
-
-**Query:**
-
-```graphql
-query GetTopMenuNavigation {
-    navigation(family: "Top-menu") {
-        slug
-        name
-        children {
-            slug
-            name
-            children {
-                slug
-                name
-            }
-        }
-    }
-}
-```
-
-**Response:**
-
-```json
-{
-    "data": {
-        "navigation": [
-            {
-                "slug": "men",
-                "name": "Men clothing",
-                "children": []
-            }
-        ]
-    }
-}
-```
-
-The response returns a single root node with no nested children:
-
-```plaintext
-Men clothing
-└── (no children)
-```
-
-### Example: Retrieve multi-level menu navigation
-
-**Query:**
-
-```graphql
-query GetFullMenuNavigation {
-    navigation(family: "menu") {
-        slug
-        name
-        children {
-            slug
-            name
-            children {
-                slug
-                name
-                children {
-                    slug
-                    name
-                }
-            }
-        }
-    }
-}
-```
-
-**Response:**
-
-```json
-{
-    "data": {
-        "navigation": [
-            {
-                "slug": "men",
-                "name": "Men clothing",
-                "children": [
-                    {
-                        "slug": "men/tops",
-                        "name": "Men tops",
-                        "children": [
-                            {
-                                "slug": "men/tops/jackets",
-                                "name": "Jackets",
-                                "children": []
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-}
-```
-
-The response returns a three-level nested hierarchy:
-
-```plaintext
-Men clothing
-└── Men tops
-    └── Jackets
-```
-
-## CategoryTree query
+## CategoryTree query examples
 
 Retrieve hierarchical category data in a tree structure with parent-child relationships and level information.
 
@@ -397,9 +415,11 @@ type Query {
 }
 ```
 
-### Example: Retrieve full category tree
+### Retrieve full category tree
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query GetFullCategoryTree {
@@ -455,9 +475,11 @@ Men's Clothing (level 0)
 └── Men's Bottoms
 ```
 
-### Example: Retrieve specific category subtree
+### Retrieve specific category subtree
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query GetSpecificCategorySubtree {
@@ -536,9 +558,11 @@ Men's Tops (level 1)          Men's Bottoms (level 1)
 └── Jackets (level 2)         └── Shorts (level 2)
 ```
 
-### Example: Retrieve root categories only
+### Retrieve root categories only
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query GetRootCategories {
@@ -587,11 +611,13 @@ Men's Clothing (level 0)     Women's Clothing (level 0)
   (referenced but not fetched) (referenced but not fetched)
 ```
 
-### Example: Retrieve category details with metadata and images
+### Retrieve category details with metadata and images
 
 Use the `description`, `metaTags`, and `images` fields to build rich category landing pages that include SEO metadata and visual content. This is especially useful when rendering a category page that needs a hero image, descriptive copy, and proper `<meta>` tags for search engines.
 
-**Query:**
+<CodeBlock slots="heading, code" repeat="2" languages="JSON" />
+
+**Request:**
 
 ```graphql
 query CategoryTree {
