@@ -279,9 +279,15 @@ Men clothing
 
 Retrieve category data for products, including breadcrumb ancestors, with optional filtering by category family.
 
-### Retrieve product categories with breadcrumb ancestors
+```graphql
+type ProductView {
+    categories(family: String): [CategoryProductView]
+}
+```
 
-The `categories` field is available on product types such as `ProductView`. You can optionally filter by `family` to return only categories from a specific family.
+The `categories` field is available on product types such as `ProductView`. Use the optional `family` parameter to return only categories from a specific category family. When omitted, categories from all families are returned.
+
+### Retrieve product categories with breadcrumb ancestors
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
