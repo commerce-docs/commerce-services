@@ -60,272 +60,47 @@ If you have questions, open an issue and ask us. We look forward to hearing from
 
 ## GraphQL API reference generator
 
-The GraphQL API reference is generated using [SpectaQL](https://github.com/anvilco/spectaql), an open source tool. The data required for the generator is located in the `spectaql` directory:
+The Merchandising GraphQL API reference is generated using [SpectaQL](https://github.com/anvilco/spectaql). It uses live introspection against the GraphQL endpoint and a metadata overlay to filter the schema down to the documented queries and types.
 
-- `config-admin.yml`: [configuration file to generate the Channels and Policies API Reference](spectaql/config-admin.yml). (Not used in the current implementation, but included for future use.)
-- `config-merchandising.yml`: [configuration file to generate the Merchandising Services API Reference](spectaql/config-admin.yml).
+### Quick start
 
-These configuration files include the endpoint for each API service.
+1. Create a `.env` file in the project root:
 
-When you build the API reference, the build script uses live introspection to retrieve the GraphQL schemas and generate the API references. The configuration file also provides the introductory text for the Welcome topic, the API reference title, and other settings used when generating the references.
-
-The resulting GraphQL API references are output to the `static/graphql-api/` directory.
-
-- `static/graphql/admin-api/index.html`
-- `static/graphql/merchandising-api/index.html`
-
-The references are embedded in the API Reference page using the `frameSrc` feature supported by the Adobe I/O theme.
-
-- [Channels and Policies API Reference](src/pages/optimizer/reference/graphql/merchandising-api/) `frameSrc: /graphql-api/merchandising-api/index.html`
-
-### Build commands
-
-To rebuild the GraphQL API references after any updates, use the following build scripts:
-
-#### Standard Build Commands
-
-Command | Description
-------- |------------
-`build:merchandising-api` | Regenerates the Merchandising API reference using live introspection
-`dev:merchandising-api` | Regenerates the Merchandising API reference with a live preview of updated output
-`build:graphql` | Regenerates both references
-
-#### Enhanced Build with Description Injection
-
-For the Merchandising API, you can use the enhanced build process that injects custom descriptions:
-
-```shell
-node scripts/build-with-enhanced-schema.js
-```
-
-This enhanced build process:
-
-1. Fetches the live GraphQL schema via introspection
-2. Injects custom descriptions from `spectaql/metadata-merchandising.json`
-3. Generates documentation with enhanced descriptions for queries, types, and fields
-
-**Use the enhanced build when:**
-
-- You've added new documentation to `spectaql/metadata-merchandising.json`
-- You want descriptions to appear for queries like `categoryTree` and `navigation`
-- You need custom field and argument descriptions that aren't in the live schema
-
-**Use the standard build when:**
-
-- You only need basic schema documentation without custom descriptions
-- You're working with schemas that already have complete descriptions
-
-### Managing Custom Descriptions
-
-The enhanced build process uses custom descriptions stored in `spectaql/metadata-merchandising.json`. This file contains documentation for:
-
-- **Queries**: Descriptions for GraphQL queries like `categoryTree` and `navigation`
-- **Types**: Descriptions for GraphQL types like `CategoryTreeView` and `CategoryNavigationView`
-- **Fields**: Descriptions for individual fields within types
-- **Arguments**: Descriptions for query and field arguments
-
-#### Adding New Documentation
-
-To add documentation for new queries, types, or fields:
-
-1. **Edit the metadata file**: Add entries to `spectaql/metadata-merchandising.json` following the existing structure:
-
-   **For Query Documentation:**
-
-   ```json
-   {
-     "OBJECT": {
-       "Query": {
-         "fields": {
-           "yourQueryName": {
-             "documentation": {
-               "description": "Description of what your query does and when to use it",
-               "undocumented": false
-             }
-           }
-         }
-       }
-     },
-     "FIELD_ARGUMENT": {
-       "Query": {
-         "yourQueryName": {
-           "argumentName": {
-             "documentation": {
-               "description": "Description of what this argument does",
-               "undocumented": false
-             }
-           }
-         }
-       }
-     }
-   }
+   ```bash
+   cp .env.example .env
    ```
 
-   **For Type Documentation:**
+2. Build the API reference:
 
-   ```json
-   {
-     "OBJECT": {
-       "YourTypeName": {
-         "documentation": {
-           "description": "Description of your type and its purpose",
-           "undocumented": false
-         },
-         "fields": {
-           "fieldName": {
-             "documentation": {
-               "description": "Description of the field and its usage",
-               "undocumented": false
-             }
-           }
-         }
-       }
-     }
-   }
+   ```bash
+   yarn build:merchandising-api
    ```
 
-   **Complete Example:**
+The generated output is written to `static/graphql-api/merchandising-api/index.html` and embedded in the documentation site using the Adobe I/O theme's `frameSrc` feature. After rebuilding, verify the output in your browser before committing changes.
 
-   ```json
-   {
-     "OBJECT": {
-       "Query": {
-         "fields": {
-           "productSearch": {
-             "documentation": {
-               "description": "Search for products using various filters and criteria. Returns paginated results with product details.",
-               "undocumented": false
-             }
-           }
-         }
-       },
-       "ProductSearchResult": {
-         "documentation": {
-           "description": "Contains search results with products and pagination information",
-           "undocumented": false
-         },
-         "fields": {
-           "products": {
-             "documentation": {
-               "description": "Array of products matching the search criteria",
-               "undocumented": false
-             }
-           },
-           "totalCount": {
-             "documentation": {
-               "description": "Total number of products found (before pagination)",
-               "undocumented": false
-             }
-           }
-         }
-       }
-     },
-     "FIELD_ARGUMENT": {
-       "Query": {
-         "productSearch": {
-           "query": {
-             "documentation": {
-               "description": "Search term to match against product names and descriptions",
-               "undocumented": false
-             }
+To generate a live preview during local development, run: `yarn dev:merchandising-api`.
 
-           },
-           "filters": {
-             "documentation": {
-               "description": "Optional filters to narrow down search results by category, price, etc.",
-               "undocumented": false
-             }
-           }
-         }
-       }
-     }
-   }
-   ```
+### Prerequisites
 
-2. **Rebuild with enhanced process**: Run `node scripts/build-with-enhanced-schema.js`
-
-3. **Verify**: Check the generated `static/graphql-api/merchandising-api/index.html` for your descriptions
-
-#### Environment Variables Required
-
-The enhanced build process requires these environment variables in your `.env` file:
-
-```bash
-TENANT_ID=your_tenant_id
-CATALOG_VIEW_ID=your_catalog_view_id
-ENVIRONMENT_ID=your_environment_id
-```
-
-#### Troubleshooting Enhanced Build
-
-**Issue: "Missing required environment variables"**
-
-- Solution: Ensure your `.env` file contains `TENANT_ID`, `CATALOG_VIEW_ID`, and `ENVIRONMENT_ID`
-
-**Issue: "Server responded with status code 404"**
-
-- Solution: Verify your environment variables are correct and the API endpoint is accessible
-
-**Issue: Descriptions not appearing in generated HTML**
-
-- Solution: Check that your metadata follows the correct JSON structure and run the enhanced build process
-
-**Issue: Build fails with permission errors**
-
-- Solution: The enhanced build may require network permissions to fetch the live schema
-
-### How to get the schema
-
-The Spectaql configuration files for the Merchandising Services GraphQL API references use the following endpoints to retrieve the schemas and generate the API references:
-
-- Channels and Policies API: https://commerce-admin-router-qa.corp.ethos501-stage-va6.ethos.adobe.net/graphql
-
-- Storefront API: https://catalog-service-qa.adobe.io/graphql
-
-If either of these endpoints change, update the live introspection URL in the corresponding config file in the `spectaql` directory with the new endpoint.
-
-### Update the API References
-
-If a schema changes, rebuild and test the API reference locally.  Then, submit a PR with updates against the `ccdm-early-access` branch. After the PR is merged, someone from the documentation team will publish the changes to the documentation server.
-
-For local builds, ensure that your environment has the following installed:
-
-- Node.js that matches the version set in the [.nvmrc](https://github.com/AdobeDocs/commerce-services/blob/main/.nvmrc) ([nvm](https://github.com/nvm-sh/nvm) configuration file).
+- Node.js matching the version in [.nvmrc](https://github.com/AdobeDocs/commerce-services/blob/main/.nvmrc)
 - Yarn
 
-## Update schema and regenerate documentation
+### Update the API reference
 
-1. Create a branch from the `ccdm-early-access` branch.
+If the schema or metadata descriptions change, rebuild and test the API reference locally:
 
-1. To regenerate an API reference locally and test changes:
+1. Create a branch from `main`.
+2. Regenerate the API reference using the enhanced build (includes custom descriptions):
 
-   **For standard schema updates:**
-
-   ```shell
-   yarn dev:merchandising-api
-   ```
-
-   **For enhanced documentation with custom descriptions:**
-
-   ```shell
+   ```bash
    node scripts/build-with-enhanced-schema.js
    ```
 
-   Use the enhanced build if you've added or modified descriptions in `spectaql/metadata-merchandising.json`.
+3. Verify the output in your browser.
+4. Commit the updated `index.html` and `enhanced-schema.json` files.
+5. After updates are approved, a documentation team member merges the PR and publishes the updates to the [developer site](https://developer.adobe.com/commerce/services/merchandising-services/).
 
-1. Commit changes and push them to your remote branch.
-
-1. Create and submit a PR against the `ccdm-early-access` branch, and request review from the Commerce Documentation team.
-
-1. After updates are approved, a documentation team member merges the PR and publishes the updates to [developer site](https://developer.adobe.com/commerce/services/merchandising-services/) for Early Access customers.
-
-   View the published API references:
-
-   - [Storefront API Reference](https://developer.adobe.com/commerce/services/optimizer/reference/graphql/merchandising-api/)
-
-### Resources
-
-For more information about SpectaQL, refer to <https://github.com/anvilco/spectaql>.
+See [`spectaql/README.md`](spectaql/README.md) for detailed configuration, build commands, offline builds, and script documentation.
 
 ## REST API Reference Generator
 

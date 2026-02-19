@@ -23,13 +23,12 @@ const metadata = JSON.parse(fs.readFileSync(metadataPath, 'utf8'));
 async function fetchIntrospection() {
   const tenantId = process.env.TENANT_ID;
   const catalogViewId = process.env.CATALOG_VIEW_ID;
-  const environmentId = process.env.ENVIRONMENT_ID;
-  
-  if (!tenantId || !catalogViewId || !environmentId) {
-    throw new Error('Missing required environment variables: TENANT_ID, CATALOG_VIEW_ID, ENVIRONMENT_ID');
+  const apiHost = process.env.API_HOST || 'na1-sandbox.api.commerce.adobe.com';
+
+  if (!tenantId || !catalogViewId) {
+    throw new Error('Missing required environment variables: TENANT_ID, CATALOG_VIEW_ID');
   }
-  
-  const url = `https://na1-sandbox.api.commerce.adobe.com/${tenantId}/graphql`;
+  const url = `https://${apiHost}/${tenantId}/graphql`;
   const introspectionQuery = {
     query: `
       query IntrospectionQuery {
@@ -50,7 +49,6 @@ async function fetchIntrospection() {
           }
         }
       }
-      
       fragment FullType on __Type {
         kind
         name
@@ -130,15 +128,14 @@ async function fetchIntrospection() {
     const postData = JSON.stringify(introspectionQuery);
     
     const options = {
-      hostname: 'na1-sandbox.api.commerce.adobe.com',
+      hostname: apiHost,
       port: 443,
       path: `/${tenantId}/graphql`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(postData),
-        'AC-Catalog-View-ID': catalogViewId,
-        'AC-Environment-ID': environmentId
+        'AC-Catalog-View-ID': catalogViewId
       }
     };
     
@@ -207,28 +204,30 @@ function injectDescriptions(introspectionResult) {
  * Inject descriptions into query fields
  */
 function injectQueryDescriptions(queryType) {
-  if (!queryType.fields || !metadata.OBJECT || !metadata.OBJECT.Query || !metadata.OBJECT.Query.fields) {
+  if (!queryType.fields) {
     return;
   }
   
+  const queryFields = metadata.OBJECT && metadata.OBJECT.Query && metadata.OBJECT.Query.fields;
+  const fieldArgs = metadata.FIELD_ARGUMENT && metadata.FIELD_ARGUMENT.Query;
+  
   queryType.fields.forEach(field => {
-    const fieldMetadata = metadata.OBJECT.Query.fields[field.name];
-    if (fieldMetadata && fieldMetadata.documentation && fieldMetadata.documentation.description) {
-      // Always inject description, even if it already exists
-      field.description = fieldMetadata.documentation.description;
-      console.log(`📝 Injected description for query: ${field.name}`);
-      
-      // Also inject argument descriptions
-      if (field.args && metadata.FIELD_ARGUMENT && metadata.FIELD_ARGUMENT.Query && metadata.FIELD_ARGUMENT.Query[field.name]) {
-        field.args.forEach(arg => {
-          const argMetadata = metadata.FIELD_ARGUMENT.Query[field.name][arg.name];
-          if (argMetadata && argMetadata.documentation && argMetadata.documentation.description) {
-            // Always inject argument description, even if it already exists
-            arg.description = argMetadata.documentation.description;
-            console.log(`📝 Injected description for argument: ${field.name}.${arg.name}`);
-          }
-        });
+    if (queryFields) {
+      const fieldMetadata = queryFields[field.name];
+      if (fieldMetadata && fieldMetadata.documentation && fieldMetadata.documentation.description) {
+        field.description = fieldMetadata.documentation.description;
+        console.log(`📝 Injected description for query: ${field.name}`);
       }
+    }
+    
+    if (field.args && fieldArgs && fieldArgs[field.name]) {
+      field.args.forEach(arg => {
+        const argMetadata = fieldArgs[field.name][arg.name];
+        if (argMetadata && argMetadata.documentation && argMetadata.documentation.description) {
+          arg.description = argMetadata.documentation.description;
+          console.log(`📝 Injected description for argument: ${field.name}.${arg.name}`);
+        }
+      });
     }
   });
 }
