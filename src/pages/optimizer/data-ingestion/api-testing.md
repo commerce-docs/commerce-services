@@ -60,7 +60,7 @@ Follow these steps to test any API operation using the interactive documentation
 
    - Click **Try it** for the operation you want to test.
 
-2.  **Configure the endpoint:** In the request template, replace the `tenantId` placeholder with your instance ID.
+1.  **Configure the endpoint:** In the request template, replace the `tenantId` placeholder with your instance ID.
 
 1. **Add authentication:** Select the **Parameters** tab, and replace the **Authorization** value with the  access token you generated in Step 1.
 
@@ -106,7 +106,7 @@ Here's a practical example of testing the Create Metadata endpoint:
        "searchWeight": 1,
        "searchTypes": [
          "AUTOCOMPLETE"
-       ]
+      ]
     }
    ]
    ```
@@ -161,6 +161,6 @@ Here's a practical example of testing the Create Metadata endpoint:
 
 After successfully testing API operations:
 
-1. **Integrate with your application** - Use the [Get Started guide](using-the-api.md) to implement API calls in your code
-3. **Explore SDKs** - Consider using the [TypeScript](https://github.com/adobe-commerce/aco-ts-sdk) or [Java](https://github.com/adobe-commerce/aco-java-sdk) SDKs for easier integration
-4. **Review limitations** - Understand [rate limits and boundaries](using-the-api.md#limitations) for production use.
+1. **Integrate with your application** - Use the [Get Started guide](using-the-api.md) to implement API calls in your code.
+2. **Explore SDKs** - Consider using the [TypeScript](https://github.com/adobe-commerce/aco-ts-sdk) or [Java](https://github.com/adobe-commerce/aco-java-sdk) SDKs for easier integration.
+3. **Review limitations** - Understand [rate limits and boundaries](using-the-api.md#limitations) for production use.
