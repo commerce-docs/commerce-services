@@ -33,105 +33,105 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@adobe/gatsby-theme-aio@npm:4.15.5":
-  version: 4.15.5
-  resolution: "@adobe/gatsby-theme-aio@npm:4.15.5"
+"@adobe/gatsby-theme-aio@npm:4.15.6":
+  version: 4.15.6
+  resolution: "@adobe/gatsby-theme-aio@npm:4.15.6"
   dependencies:
-    "@adobe/focus-ring-polyfill": "npm:^0.1.5"
-    "@adobe/gatsby-source-github-file-contributors": "npm:^0.3.1"
-    "@adobe/prism-adobe": "npm:^1.0.3"
-    "@emotion/react": "npm:^11.10.4"
-    "@loadable/component": "npm:^5.15.2"
-    "@mdx-js/mdx": "npm:1.6.22"
-    "@mdx-js/react": "npm:1.6.22"
-    "@spectrum-css/accordion": "npm:3.0.24"
-    "@spectrum-css/actionbutton": "npm:2.1.7"
-    "@spectrum-css/actiongroup": "npm:^2.0.0"
-    "@spectrum-css/assetlist": "npm:3.0.24"
-    "@spectrum-css/badge": "npm:^1.0.20"
-    "@spectrum-css/breadcrumb": "npm:5.0.0"
-    "@spectrum-css/button": "npm:6.0.13"
-    "@spectrum-css/card": "npm:5.0.0"
-    "@spectrum-css/checkbox": "npm:3.1.3"
-    "@spectrum-css/contextualhelp": "npm:^2.0.35"
-    "@spectrum-css/dialog": "npm:6.0.15"
-    "@spectrum-css/divider": "npm:1.0.27"
-    "@spectrum-css/icon": "npm:3.0.23"
-    "@spectrum-css/inlinealert": "npm:4.0.13"
-    "@spectrum-css/link": "npm:3.1.23"
-    "@spectrum-css/menu": "npm:4.0.4"
-    "@spectrum-css/modal": "npm:3.0.23"
-    "@spectrum-css/picker": "npm:1.2.12"
-    "@spectrum-css/popover": "npm:5.0.18"
-    "@spectrum-css/progresscircle": "npm:1.0.23"
-    "@spectrum-css/search": "npm:4.2.12"
-    "@spectrum-css/sidenav": "npm:3.0.24"
-    "@spectrum-css/table": "npm:4.0.19"
-    "@spectrum-css/tabs": "npm:3.2.19"
-    "@spectrum-css/textfield": "npm:3.2.4"
-    "@spectrum-css/tooltip": "npm:3.1.18"
-    "@spectrum-css/typography": "npm:4.0.20"
-    "@spectrum-css/underlay": "npm:2.0.31"
-    "@spectrum-css/vars": "npm:8.0.0"
-    "@spectrum-css/well": "npm:3.0.22"
-    algolia-html-extractor: "npm:^0.0.1"
-    algoliasearch: "npm:^4.14.2"
-    await-exec: "npm:^0.1.2"
-    builtin-status-codes: "npm:^3.0.0"
-    classnames: "npm:^2.3.2"
-    core-js: "npm:^3.25.1"
-    file-saver: "npm:^2.0.5"
-    gatsby-plugin-algolia: "npm:^0.26.0"
-    gatsby-plugin-emotion: "npm:^7.23.0"
-    gatsby-plugin-layout: "npm:^3.23.0"
-    gatsby-plugin-mdx: "npm:^3.20.0"
-    gatsby-plugin-mdx-embed: "npm:^1.0.0"
-    gatsby-plugin-preact: "npm:^6.23.0"
-    gatsby-plugin-react-helmet: "npm:^5.23.0"
-    gatsby-plugin-sharp: "npm:^4.23.0"
-    gatsby-remark-autolink-headers: "npm:^5.23.0"
-    gatsby-remark-copy-linked-files: "npm:^5.23.0"
-    gatsby-remark-images-remote: "npm:^2.1.1"
-    gatsby-source-filesystem: "npm:^4.23.0"
-    gatsby-transformer-remark: "npm:^5.23.0"
-    gatsby-transformer-sharp: "npm:4.23.0"
-    https-browserify: "npm:^1.0.0"
-    jsdom: "npm:^20.0.0"
-    jszip: "npm:^3.10.1"
-    jszip-utils: "npm:^0.1.0"
-    lottie-web: "npm:^5.9.6"
-    mdx-embed: "npm:^1.0.0"
-    mobx: "npm:^6.6.2"
-    normalize-path: "npm:^3.0.0"
-    os-browserify: "npm:^0.3.0"
-    path-browserify: "npm:^1.0.1"
-    penpal: "npm:^6.2.2"
-    postcss: "npm:^8.4.16"
-    preact: "npm:^10.11.0"
-    preact-render-to-string: "npm:^6.5.5"
-    prism-react-renderer: "npm:1.3.5"
-    prop-types: "npm:^15.8.1"
-    react-helmet: "npm:^6.1.0"
-    react-id-generator: "npm:^3.0.2"
-    redoc: "npm:2.0.0"
-    redoc-cli: "npm:^0.13.20"
-    rehype-slug-custom-id: "npm:^1.1.0"
-    request: "npm:^2.88.2"
-    resize-observer-polyfill: "npm:^1.5.1"
-    sharp: "npm:0.33.0"
-    stream-http: "npm:^3.2.0"
-    styled-components: "npm:^5.3.5"
-    swiper: "npm:^8.3.2"
-    to-arraybuffer: "npm:^1.0.1"
-    tty-browserify: "npm:^0.0.1"
-    unist-util-select: "npm:3.0.4"
-    use-debounce: "npm:^9.0.4"
-    uuid: "npm:^9.0.0"
+    "@adobe/focus-ring-polyfill": ^0.1.5
+    "@adobe/gatsby-source-github-file-contributors": ^0.3.1
+    "@adobe/prism-adobe": ^1.0.3
+    "@emotion/react": ^11.10.4
+    "@loadable/component": ^5.15.2
+    "@mdx-js/mdx": 1.6.22
+    "@mdx-js/react": 1.6.22
+    "@spectrum-css/accordion": 3.0.24
+    "@spectrum-css/actionbutton": 2.1.7
+    "@spectrum-css/actiongroup": ^2.0.0
+    "@spectrum-css/assetlist": 3.0.24
+    "@spectrum-css/badge": ^1.0.20
+    "@spectrum-css/breadcrumb": 5.0.0
+    "@spectrum-css/button": 6.0.13
+    "@spectrum-css/card": 5.0.0
+    "@spectrum-css/checkbox": 3.1.3
+    "@spectrum-css/contextualhelp": ^2.0.35
+    "@spectrum-css/dialog": 6.0.15
+    "@spectrum-css/divider": 1.0.27
+    "@spectrum-css/icon": 3.0.23
+    "@spectrum-css/inlinealert": 4.0.13
+    "@spectrum-css/link": 3.1.23
+    "@spectrum-css/menu": 4.0.4
+    "@spectrum-css/modal": 3.0.23
+    "@spectrum-css/picker": 1.2.12
+    "@spectrum-css/popover": 5.0.18
+    "@spectrum-css/progresscircle": 1.0.23
+    "@spectrum-css/search": 4.2.12
+    "@spectrum-css/sidenav": 3.0.24
+    "@spectrum-css/table": 4.0.19
+    "@spectrum-css/tabs": 3.2.19
+    "@spectrum-css/textfield": 3.2.4
+    "@spectrum-css/tooltip": 3.1.18
+    "@spectrum-css/typography": 4.0.20
+    "@spectrum-css/underlay": 2.0.31
+    "@spectrum-css/vars": 8.0.0
+    "@spectrum-css/well": 3.0.22
+    algolia-html-extractor: ^0.0.1
+    algoliasearch: ^4.14.2
+    await-exec: ^0.1.2
+    builtin-status-codes: ^3.0.0
+    classnames: ^2.3.2
+    core-js: ^3.25.1
+    file-saver: ^2.0.5
+    gatsby-plugin-algolia: ^0.26.0
+    gatsby-plugin-emotion: ^7.23.0
+    gatsby-plugin-layout: ^3.23.0
+    gatsby-plugin-mdx: ^3.20.0
+    gatsby-plugin-mdx-embed: ^1.0.0
+    gatsby-plugin-preact: ^6.23.0
+    gatsby-plugin-react-helmet: ^5.23.0
+    gatsby-plugin-sharp: ^4.23.0
+    gatsby-remark-autolink-headers: ^5.23.0
+    gatsby-remark-copy-linked-files: ^5.23.0
+    gatsby-remark-images-remote: ^2.1.1
+    gatsby-source-filesystem: ^4.23.0
+    gatsby-transformer-remark: ^5.23.0
+    gatsby-transformer-sharp: 4.23.0
+    https-browserify: ^1.0.0
+    jsdom: ^20.0.0
+    jszip: ^3.10.1
+    jszip-utils: ^0.1.0
+    lottie-web: ^5.9.6
+    mdx-embed: ^1.0.0
+    mobx: ^6.6.2
+    normalize-path: ^3.0.0
+    os-browserify: ^0.3.0
+    path-browserify: ^1.0.1
+    penpal: ^6.2.2
+    postcss: ^8.4.16
+    preact: ^10.11.0
+    preact-render-to-string: ^6.5.5
+    prism-react-renderer: 1.3.5
+    prop-types: ^15.8.1
+    react-helmet: ^6.1.0
+    react-id-generator: ^3.0.2
+    redoc: 2.0.0
+    redoc-cli: ^0.13.20
+    rehype-slug-custom-id: ^1.1.0
+    request: ^2.88.2
+    resize-observer-polyfill: ^1.5.1
+    sharp: 0.33.0
+    stream-http: ^3.2.0
+    styled-components: ^5.3.5
+    swiper: ^8.3.2
+    to-arraybuffer: ^1.0.1
+    tty-browserify: ^0.0.1
+    unist-util-select: 3.0.4
+    use-debounce: ^9.0.4
+    uuid: ^9.0.0
   peerDependencies:
     gatsby: ^4.22.0
     react: ^17.0.2
     react-dom: ^17.0.2
-  checksum: 5184b9506d5aa9bacf8053db80529dbfd0524debece4b405dd993d949faa114fcb7b12cab7996c4962838c941b7c51913b8a4f38f47a4ce857cc13dd87710af8
+  checksum: a1b946f65421dacc5a8de5246b5c14fe62d42fd263d090dfb9029b99c63e4c170bc1eba8b249b6dccb45e33b39faf84dbf6b93b6b9dde8df138a4283c5ad37fb
   languageName: node
   linkType: hard
 
@@ -7704,7 +7704,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "commerce-services@workspace:."
   dependencies:
-    "@adobe/gatsby-theme-aio": 4.15.5
+    "@adobe/gatsby-theme-aio": 4.15.6
     axios: 0.30.0
     browserslist: latest
     dotenv: ^17.2.1
