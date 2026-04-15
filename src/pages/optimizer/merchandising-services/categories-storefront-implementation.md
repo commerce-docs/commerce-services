@@ -1,7 +1,7 @@
 ---
 title: Implement Categories on the Storefront
 edition: saas
-description: Learn to ingest category data, build storefront menus with navigation and categoryTree queries, search categories by name, and get product category context.
+description: Learn to ingest category data, build storefront menus using navigation and categoryTree queries, search categories by name with searchCategory, and retrieve product category context with the products query.
 keywords:
   - GraphQL
   - Services
@@ -30,8 +30,8 @@ For Commerce sites with an Adobe Commerce as a Cloud Service or an Adobe Commerc
 The `navigation` query, `categoryTree` query, `searchCategory` query, and `categories` field on product queries each return data shaped for a specific use case. Navigation, tree, and search results use types that implement the `CategoryViewV2` interface, which defines the two required fields shared by every category: `slug` and `name`. For complete field details, see [`CategoryViewV2`](https://developer.adobe.com/commerce/services/graphql-api/merchandising-api/index.html#definition-CategoryViewV2) in the Merchandising Services GraphQL API reference.
 
 1. **[CategoryNavigationView](#categorynavigationview-type)** — For menu rendering and navigation
-2. **[CategoryProductView](#categoryproductview-type)** — For category data returned with product queries
-3. **[CategoryTreeView](#categorytreeview-type)** — For hierarchical category management, rich category pages, and each matching category from the [`searchCategory`](#searchcategory-query-examples) query
+1. **[CategoryProductView](#categoryproductview-type)** — For category data returned with product queries
+1. **[CategoryTreeView](#categorytreeview-type)** — For hierarchical category management, rich category pages, and each matching category from the [`searchCategory`](#searchcategory-query-examples) query
 
 ### CategoryNavigationView type
 
@@ -178,6 +178,8 @@ The `family` parameter is required and specifies which category family to retrie
 
 ### Retrieve basic top menu navigation
 
+When you only need identity fields for the root of a category family—for example, a simple top bar or a single entry point before loading deeper levels—you can query `navigation` with `slug` and `name` only. The following example requests the `sports` family and returns that root node without selecting `children`, so the response stays small and easy to cache.
+
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
 **Request:**
@@ -213,6 +215,8 @@ Sports
 ```
 
 ### Retrieve multi-level menu navigation
+
+Storefront menus that expand into submenus or mega panels need nested `children` on each `CategoryNavigationView`. The following example nests `children` selection sets through three levels (within the `navigation` query’s four-level cap). The response illustrates how indoor and outdoor branches attach under the same root so you can render a full hierarchy in one round trip.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
@@ -300,6 +304,8 @@ The `categories` field is available on product types such as `ProductView`. Use 
 
 ### Retrieve product categories with breadcrumb ancestors
 
+Product detail pages often need the category path from the root down to the product. The following example queries `products` by SKU and requests `categories` for the `clothing` family with `name`, `slug`, `level`, and each category’s `parents`, so you can order ancestors by `level` and render a breadcrumb trail.
+
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
 **GraphQL request:**
@@ -366,7 +372,7 @@ Men (level 1) → Clothes (level 2) → Shorts (level 3)
 
 ### Filter product categories by family
 
-A product can belong to categories in multiple families. Use the `family` parameter to return only categories from a specific family. In this example, the product belongs to categories in both the "clothing" and "seasonal" families, but the query filters for "seasonal" only.
+A single product can appear in categories from more than one family; returning every family at once is not always what the page needs. The following example uses the same SKU as the breadcrumb sample but passes `family: "seasonal"` on `categories`, so only seasonal taxonomy nodes come back. That pattern fits seasonal campaigns, alternate merchandising trees, or any UI that should show one family’s context at a time.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
@@ -436,7 +442,7 @@ The `family` argument is optional. Include it when you need to restrict the tree
 
 ### Retrieve root-level categories
 
-When called without `slugs`, omitting or setting `depth` controls how far down the hierarchy results extend by **category level**. (See [`categoryTree` depth and discovery behavior](#categorytree-depth-and-discovery-behavior)). The example below requests roots for a single family and does not pass `depth`. Submitting this type of request is useful to list top-level entry points before loading deeper nodes.
+When you call `categoryTree` without `slugs`, `depth` (when set) limits how deep the result goes by **category level** across the scoped tree; see [`categoryTree` depth and discovery behavior](#categorytree-depth-and-discovery-behavior). The following example scopes by `family` only, omits `depth`, and asks for `slug`, `name`, `level`, `parentSlug`, and `childrenSlugs`. Use this shape to discover top-level categories and their immediate child references before requesting heavier subtrees.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
@@ -489,6 +495,8 @@ Women's Category (level 1)
 ```
 
 ### Retrieve specific category subtree
+
+When you already know which branches matter—such as men’s and women’s clothing—pass those starting `slugs` so you do not pull the entire catalog. With `slugs` present, `depth` counts **from each starting slug** (that slug is level 1 of the window). The following example requests two clothing subtrees under `main-catalog` with `depth: 2` and returns nodes with hierarchy fields so you can wire category pages or admin trees for just those paths.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
@@ -573,7 +581,7 @@ Men's Clothing (level 2)      Women's Clothing (level 2)
 
 ### Retrieve category details with metadata and images
 
-Use the `description`, `metaTags`, and `images` fields to build rich category landing pages that include SEO metadata and visual content. This is especially useful when rendering a category page that needs a hero image, descriptive copy, and proper `<meta>` tags for search engines.
+Category landing pages usually need more than slugs and labels: copy for the body, `<meta>` fields for search, and imagery for heroes or thumbnails. The following example targets one slug under `clothing` and selects `description`, `metaTags` (title, description, keywords), and `images` with `url`, `label`, and role fields—enough to render a full SEO-aware category template from a single `categoryTree` call.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
@@ -674,6 +682,8 @@ type PageInfo {
 
 ### Search categories by name
 
+Shoppers and internal tools often find categories by typing a fragment of the display name rather than browsing the tree. The following example calls `searchCategory` with `searchTerm: "Shorts"` and no `family`, then requests `totalCount`, a page of `items` with `slug`, `name`, and `level`, plus `pageInfo` for pagination. The response lists every category whose name matches across the catalog scope your API uses.
+
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
 **Request:**
@@ -726,6 +736,8 @@ query SearchCategoriesByName {
 ```
 
 ### Search within a family and paginate
+
+Large catalogs can return many name matches; narrowing by `family` and paging keeps typeaheads and pickers responsive. The following example searches for `"tops"` inside `main-catalog`, sets `pageSize` and `currentPage`, and returns `parentSlug` and `childrenSlugs` on each hit plus `pageInfo` showing how many pages exist when `totalCount` exceeds the page size.
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON" />
 
