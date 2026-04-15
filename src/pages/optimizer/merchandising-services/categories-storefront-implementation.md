@@ -183,19 +183,11 @@ The `family` parameter is required and specifies which category family to retrie
 **Request:**
 
 ```graphql
-query GetTopMenuNavigation {
-    navigation(family: "top-menu") {
-        slug
-        name
-        children {
-            slug
-            name
-            children {
-                slug
-                name
-            }
-        }
-    }
+query TopLevelNavigation {
+  navigation(family: "sports") {
+    slug
+    name
+  }
 }
 ```
 
@@ -203,23 +195,21 @@ query GetTopMenuNavigation {
 
 ```json
 {
-    "data": {
-        "navigation": [
-            {
-                "slug": "men",
-                "name": "Men clothing",
-                "children": []
-            }
-        ]
-    }
+  "data": {
+    "navigation": [
+      {
+        "slug": "sports",
+        "name": "Category of sports"
+      }
+    ]
+  },
 }
 ```
 
-The response returns a single root node with no nested children:
+The response returns a single root node with no children.
 
 ```text
-Men clothing
-└── (no children)
+Sports
 ```
 
 ### Retrieve multi-level menu navigation
@@ -230,7 +220,7 @@ Men clothing
 
 ```graphql
 query GetFullMenuNavigation {
-    navigation(family: "menu") {
+    navigation(family: "sports") {
         slug
         name
         children {
@@ -253,36 +243,49 @@ query GetFullMenuNavigation {
 
 ```json
 {
-    "data": {
-        "navigation": [
-            {
-                "slug": "men",
-                "name": "Men clothing",
-                "children": [
-                    {
-                        "slug": "men/tops",
-                        "name": "Men tops",
-                        "children": [
-                            {
-                                "slug": "men/tops/jackets",
-                                "name": "Jackets",
-                                "children": []
-                            }
-                        ]
-                    }
-                ]
-            }
+  "data": {
+    "navigation": [
+      {
+        "slug": "sports",
+        "name": "Category of sports",
+        "children": [
+          {
+            "slug": "sports/indoors",
+            "name": "Sports to be played indoors",
+            "children": [
+              {
+                "slug": "sports/indoors/pilates",
+                "name": "Pilates sport",
+                "children": []
+              }
+            ]
+          },
+          {
+            "slug": "sports/outdoors",
+            "name": "Sports to be played outdoors",
+            "children": [
+              {
+                "slug": "sports/outdoors/golf",
+                "name": "Go sport",
+                "children": []
+              }
+            ]
+          }
         ]
-    }
+      }
+    ]
+  }
 }
 ```
 
 The response returns a three-level nested hierarchy:
 
 ```text
-Men clothing
-└── Men tops
-    └── Jackets
+Sports
+└── Indoors
+    └── Pilates
+└── Outdoors
+    └── Golf
 ```
 
 ## Products query with categories examples
